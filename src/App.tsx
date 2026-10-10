@@ -17,25 +17,16 @@ import { AboutSection } from './components/AboutSection';
 import { ContactAndFooterSection } from './components/ContactAndFooterSection';
 
 export default function App() {
-  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const nx = (e.clientX / window.innerWidth - 0.5) * 2;
-      const ny = (e.clientY / window.innerHeight - 0.5) * 2;
-      setMouseOffset({ x: nx, y: ny });
-    };
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 24);
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -157,7 +148,7 @@ export default function App() {
       {/* 100vh Hero Section */}
       <section className="relative h-screen max-h-screen w-full overflow-hidden flex flex-col justify-center">
         {/* Background Cosmic Horizon Arc, Vertical Light Shafts & Bottom Particles */}
-        <HorizonBackdrop mouseOffset={mouseOffset} />
+        <HorizonBackdrop />
 
         {/* Main Hero Centerpiece (Positioned inside the glowing horizon dome within 100vh) */}
         <main className="relative z-20 flex flex-col items-center justify-center pt-[12vh] px-6 text-center overflow-hidden">

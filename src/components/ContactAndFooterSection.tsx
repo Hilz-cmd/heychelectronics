@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle, Check, Copy, ExternalLink, X, Sparkles } from 'lucide-react';
 
 // 8x9 bold dot-matrix bitmaps for H, E, Y, C, H
@@ -138,7 +138,6 @@ export const ContactAndFooterSection: React.FC = () => {
   const [selectedTopic, setSelectedTopic] = useState('Outdoor LED Billboard Inquiry');
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [activeSocialToast, setActiveSocialToast] = useState<string | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Cycle the footer HEYCH LED effect every 4 seconds
   useEffect(() => {
@@ -148,145 +147,13 @@ export const ContactAndFooterSection: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Render full-width individual-LED "HEYCH" board on high-DPI Canvas at 60fps
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animId: number;
-    let tick = 0;
-
-    const renderFrame = () => {
-      tick += 1;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = canvas.getBoundingClientRect();
-      const width = Math.max(320, rect.width);
-      // Proportional height so the 56x11 circular LEDs are round and cover the whole width
-      const cellPitch = width / TOTAL_COLS;
-      const height = cellPitch * TOTAL_ROWS;
-
-      if (canvas.width !== Math.floor(width * dpr) || canvas.height !== Math.floor(height * dpr)) {
-        canvas.width = Math.floor(width * dpr);
-        canvas.height = Math.floor(height * dpr);
-      }
-
-      ctx.save();
-      ctx.scale(dpr, dpr);
-
-      // Dark recessed PCB / Matrix board background
-      ctx.fillStyle = '#02040c';
-      ctx.fillRect(0, 0, width, height);
-
-      const diodeRadius = Math.max(1.8, cellPitch * 0.34);
-
-      for (let i = 0; i < DIODE_MATRIX.length; i++) {
-        const cell = DIODE_MATRIX[i];
-        const cx = (cell.col + 0.5) * cellPitch;
-        const cy = (cell.row + 0.5) * cellPitch;
-
-        if (!cell.isLit) {
-          // Unlit physical LED diode lens (clearly visible individual LED bulb)
-          ctx.beginPath();
-          ctx.arc(cx, cy, diodeRadius, 0, Math.PI * 2);
-          ctx.fillStyle = '#0b1126';
-          ctx.fill();
-
-          // Subtle physical diode rim & specular dot
-          ctx.lineWidth = 0.75;
-          ctx.strokeStyle = 'rgba(110, 145, 235, 0.16)';
-          ctx.stroke();
-
-          ctx.beginPath();
-          ctx.arc(cx - diodeRadius * 0.28, cy - diodeRadius * 0.28, diodeRadius * 0.22, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(180, 205, 255, 0.10)';
-          ctx.fill();
-        } else {
-          // Lit LED diode belonging to "H E Y C H"
-          let r = 130;
-          let g = 175;
-          let b = 255;
-          let intensity = 1;
-
-          if (ledEffect === 0) {
-            // Effect 0: Cobalt Horizon Wave
-            const wave = Math.sin(tick * 0.08 - cell.col * 0.18 + cell.row * 0.12);
-            intensity = 0.65 + 0.35 * (wave * 0.5 + 0.5);
-            r = Math.round(110 + 135 * intensity);
-            g = Math.round(155 + 95 * intensity);
-            b = 255;
-          } else if (ledEffect === 1) {
-            // Effect 1: Solar Amber Letter Chase & Strobe
-            const activeLetter = Math.floor(tick / 14) % 6;
-            const isHighlighted =
-              activeLetter === 5
-                ? Math.floor(tick / 4) % 2 === 0
-                : cell.letterIndex === activeLetter;
-            intensity = isHighlighted ? 1.0 : 0.42;
-            r = 255;
-            g = Math.round(165 + 75 * intensity);
-            b = Math.round(25 + 140 * intensity);
-          } else if (ledEffect === 2) {
-            // Effect 2: Cyber Cyan-Emerald Matrix Scan
-            const scanRow = (tick * 0.18) % TOTAL_ROWS;
-            const distRow = Math.abs(cell.row - scanRow);
-            const scanBoost = Math.max(0, 1 - distRow / 3.5);
-            intensity = 0.55 + 0.45 * scanBoost;
-            r = Math.round(40 + 180 * scanBoost);
-            g = Math.round(215 + 40 * scanBoost);
-            b = Math.round(225 + 30 * Math.sin(tick * 0.05 + cell.col * 0.1));
-          } else {
-            // Effect 3: Radial Spectrum Ripple from center of "Y"
-            const dx = cell.col - TOTAL_COLS / 2;
-            const dy = cell.row - TOTAL_ROWS / 2;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            const ripple = Math.sin(dist * 0.35 - tick * 0.12) * 0.5 + 0.5;
-            intensity = 0.6 + 0.4 * ripple;
-            r = Math.round(145 + 100 * ripple);
-            g = Math.round(125 + 110 * (1 - ripple));
-            b = 255;
-          }
-
-          // 1. Outer LED Bloom Halo
-          const glowGrad = ctx.createRadialGradient(
-            cx,
-            cy,
-            diodeRadius * 0.2,
-            cx,
-            cy,
-            diodeRadius * 2.25
-          );
-          glowGrad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${0.55 * intensity})`);
-          glowGrad.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, ${0.18 * intensity})`);
-          glowGrad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
-
-          ctx.beginPath();
-          ctx.arc(cx, cy, diodeRadius * 2.25, 0, Math.PI * 2);
-          ctx.fillStyle = glowGrad;
-          ctx.fill();
-
-          // 2. Physical Lit LED Bulb Body
-          ctx.beginPath();
-          ctx.arc(cx, cy, diodeRadius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.85 * intensity + 0.15})`;
-          ctx.fill();
-
-          // 3. Hot White-Tinted Diode Core inside the bulb
-          ctx.beginPath();
-          ctx.arc(cx, cy, diodeRadius * 0.52, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${0.75 * intensity + 0.15})`;
-          ctx.fill();
-        }
-      }
-
-      ctx.restore();
-      animId = requestAnimationFrame(renderFrame);
-    };
-
-    renderFrame();
-    return () => cancelAnimationFrame(animId);
-  }, [ledEffect]);
+  // Color palette per effect for the full-width SVG LED diode array
+  const effectPalette = [
+    { core: '#ffffff', bulb: '#7da2ff', halo: 'rgba(110, 155, 255, 0.45)', animClass: 'led-effect-wave' },
+    { core: '#fff7d6', bulb: '#ffb703', halo: 'rgba(255, 175, 30, 0.45)', animClass: 'led-effect-strobe' },
+    { core: '#e0faff', bulb: '#22d3ee', halo: 'rgba(34, 211, 238, 0.45)', animClass: 'led-effect-prism' },
+    { core: '#f3e8ff', bulb: '#a855f7', halo: 'rgba(168, 85, 247, 0.45)', animClass: 'led-effect-wave' },
+  ][ledEffect];
 
   const whatsappUrl = `https://wa.me/18005550199?text=${encodeURIComponent(
     `Hello HEYCH / NEONE team, I would like to discuss: ${selectedTopic}`
@@ -429,13 +296,45 @@ export const ContactAndFooterSection: React.FC = () => {
             }
           }}
           aria-label="HEYCH full-width interactive LED matrix display"
-          className="relative w-full bg-[#02040c] border-t border-[#6c8eff]/20 cursor-pointer overflow-hidden"
+          className="relative w-full bg-[#02040c] border-t border-[#6c8eff]/20 cursor-pointer overflow-hidden py-3"
         >
-          <canvas
-            ref={canvasRef}
-            className="block w-full h-auto"
-            style={{ aspectRatio: `${TOTAL_COLS} / ${TOTAL_ROWS}` }}
-          />
+          <svg
+            viewBox={`0 0 ${TOTAL_COLS * 20} ${TOTAL_ROWS * 20}`}
+            className={`block w-full h-auto ${effectPalette.animClass}`}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {DIODE_MATRIX.map((cell, idx) => {
+              const cx = cell.col * 20 + 10;
+              const cy = cell.row * 20 + 10;
+              if (!cell.isLit) {
+                return (
+                  <g key={idx}>
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={6.4}
+                      fill="#0b1126"
+                      stroke="rgba(110, 145, 235, 0.16)"
+                      strokeWidth="0.9"
+                    />
+                    <circle
+                      cx={cx - 1.8}
+                      cy={cy - 1.8}
+                      r={1.4}
+                      fill="rgba(180, 205, 255, 0.12)"
+                    />
+                  </g>
+                );
+              }
+              return (
+                <g key={idx}>
+                  <circle cx={cx} cy={cy} r={11} fill={effectPalette.halo} />
+                  <circle cx={cx} cy={cy} r={6.6} fill={effectPalette.bulb} />
+                  <circle cx={cx} cy={cy} r={3.4} fill={effectPalette.core} />
+                </g>
+              );
+            })}
+          </svg>
         </div>
       </footer>
 

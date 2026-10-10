@@ -1,8 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-
-interface HorizonBackdropProps {
-  mouseOffset: { x: number; y: number };
-}
+import React from 'react';
 
 // Vertical light curtain columns positioned above the arc
 const LIGHT_COLUMNS = [
@@ -21,82 +17,28 @@ const LIGHT_COLUMNS = [
   { left: '68.4%', width: '32px', height: '40vh', opacity: 0.08 },
 ];
 
-export const HorizonBackdrop: React.FC<HorizonBackdropProps> = ({ mouseOffset }) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+const STAR_PARTICLES = [
+  { x: 325, y: 132, r: 1.5, alpha: 0.80 },
+  { x: 256, y: 146, r: 1.3, alpha: 0.68 },
+  { x: 274, y: 170, r: 1.2, alpha: 0.58 },
+  { x: 295, y: 162, r: 1.1, alpha: 0.48 },
+  { x: 350, y: 158, r: 1.4, alpha: 0.65 },
+  { x: 405, y: 165, r: 1.4, alpha: 0.70 },
+  { x: 432, y: 148, r: 1.3, alpha: 0.62 },
+  { x: 446, y: 156, r: 1.5, alpha: 0.75 },
+  { x: 205, y: 182, r: 1.2, alpha: 0.45 },
+  { x: 238, y: 176, r: 1.0, alpha: 0.40 },
+  { x: 312, y: 186, r: 1.2, alpha: 0.55 },
+  { x: 374, y: 182, r: 1.1, alpha: 0.52 },
+  { x: 388, y: 142, r: 1.0, alpha: 0.45 },
+  { x: 478, y: 175, r: 1.2, alpha: 0.48 },
+  { x: 496, y: 188, r: 1.1, alpha: 0.42 },
+  { x: 342, y: 140, r: 0.9, alpha: 0.40 },
+  { x: 284, y: 149, r: 1.0, alpha: 0.44 },
+  { x: 418, y: 179, r: 1.1, alpha: 0.54 },
+];
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    const width = 700;
-    const height = 200;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.scale(dpr, dpr);
-
-    // Seeded-like static + gently drifting bottom particles matching reference image
-    const particles = [
-      { x: 325, y: 132, r: 1.4, baseAlpha: 0.75, speed: 0.015, phase: 0.2 },
-      { x: 256, y: 146, r: 1.2, baseAlpha: 0.65, speed: 0.012, phase: 1.4 },
-      { x: 274, y: 170, r: 1.1, baseAlpha: 0.55, speed: 0.018, phase: 2.1 },
-      { x: 295, y: 162, r: 1.0, baseAlpha: 0.45, speed: 0.014, phase: 0.8 },
-      { x: 350, y: 158, r: 1.3, baseAlpha: 0.60, speed: 0.016, phase: 3.0 },
-      { x: 405, y: 165, r: 1.3, baseAlpha: 0.65, speed: 0.013, phase: 1.9 },
-      { x: 432, y: 148, r: 1.2, baseAlpha: 0.60, speed: 0.017, phase: 4.2 },
-      { x: 446, y: 156, r: 1.4, baseAlpha: 0.70, speed: 0.011, phase: 2.7 },
-      { x: 205, y: 182, r: 1.1, baseAlpha: 0.40, speed: 0.015, phase: 5.1 },
-      { x: 238, y: 176, r: 0.9, baseAlpha: 0.35, speed: 0.019, phase: 1.1 },
-      { x: 312, y: 186, r: 1.1, baseAlpha: 0.50, speed: 0.013, phase: 3.6 },
-      { x: 374, y: 182, r: 1.0, baseAlpha: 0.48, speed: 0.014, phase: 0.5 },
-      { x: 388, y: 142, r: 0.9, baseAlpha: 0.42, speed: 0.016, phase: 2.4 },
-      { x: 478, y: 175, r: 1.1, baseAlpha: 0.45, speed: 0.012, phase: 4.8 },
-      { x: 496, y: 188, r: 1.0, baseAlpha: 0.38, speed: 0.015, phase: 1.7 },
-      { x: 342, y: 140, r: 0.8, baseAlpha: 0.35, speed: 0.020, phase: 3.9 },
-      { x: 284, y: 149, r: 0.9, baseAlpha: 0.40, speed: 0.014, phase: 2.9 },
-      { x: 418, y: 179, r: 1.0, baseAlpha: 0.50, speed: 0.016, phase: 0.3 },
-    ];
-
-    let tick = 0;
-    const render = () => {
-      tick += 1;
-      ctx.clearRect(0, 0, width, height);
-
-      for (const p of particles) {
-        const twinkle = Math.sin(tick * p.speed + p.phase) * 0.22;
-        const alpha = Math.max(0.15, Math.min(0.95, p.baseAlpha + twinkle));
-        const floatY = p.y + Math.cos(tick * 0.01 + p.phase) * 2.2;
-        const floatX = p.x + Math.sin(tick * 0.008 + p.phase) * 1.5;
-
-        // Soft outer glow
-        const grad = ctx.createRadialGradient(floatX, floatY, 0, floatX, floatY, p.r * 3.5);
-        grad.addColorStop(0, `rgba(210, 228, 255, ${alpha})`);
-        grad.addColorStop(0.4, `rgba(130, 170, 255, ${alpha * 0.45})`);
-        grad.addColorStop(1, 'rgba(90, 130, 255, 0)');
-
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(floatX, floatY, p.r * 3.5, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Crisp star core
-        ctx.fillStyle = `rgba(240, 247, 255, ${Math.min(1, alpha * 1.15)})`;
-        ctx.beginPath();
-        ctx.arc(floatX, floatY, p.r * 0.75, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
-
+export const HorizonBackdrop: React.FC = () => {
   return (
     <div
       className="pointer-events-none absolute inset-0 overflow-hidden select-none"
@@ -113,9 +55,8 @@ export const HorizonBackdrop: React.FC<HorizonBackdropProps> = ({ mouseOffset })
 
       {/* 2. Vertical Light Curtains / Aurora Pillars Above the Arc */}
       <div
-        className="absolute inset-x-0 top-0 h-[62vh] transition-transform duration-500 ease-out"
+        className="absolute inset-x-0 top-0 h-[62vh]"
         style={{
-          transform: `translate3d(${mouseOffset.x * -8}px, ${mouseOffset.y * -4}px, 0)`,
           maskImage:
             'radial-gradient(ellipse 38% 75% at 50% 35%, black 25%, rgba(0,0,0,0.6) 65%, transparent 95%)',
           WebkitMaskImage:
@@ -144,12 +85,7 @@ export const HorizonBackdrop: React.FC<HorizonBackdropProps> = ({ mouseOffset })
       </div>
 
       {/* 3. Horizon Eclipse Arc & Atmospheric Glow System */}
-      <div
-        className="absolute left-1/2 top-0 -translate-x-1/2 w-[177.78vh] min-w-[1024px] h-screen transition-transform duration-300 ease-out"
-        style={{
-          transform: `translate3d(${mouseOffset.x * 6}px, ${mouseOffset.y * 4}px, 0)`,
-        }}
-      >
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[177.78vh] min-w-[1024px] h-screen">
         {/* Broad outer sky bloom around the apex */}
         <div
           className="absolute left-1/2 -translate-x-1/2 top-[10.8vh] w-[44%] h-[28vh] rounded-full animate-horizon-pulse"
@@ -362,11 +298,25 @@ export const HorizonBackdrop: React.FC<HorizonBackdropProps> = ({ mouseOffset })
             filter: 'blur(8px)',
           }}
         />
-        {/* Starlight particles canvas */}
-        <canvas
-          ref={canvasRef}
-          className="relative w-full h-full opacity-95"
-        />
+        {/* Starlight particles SVG */}
+        <svg viewBox="0 0 700 200" className="relative w-full h-full opacity-95">
+          {STAR_PARTICLES.map((p, i) => (
+            <g key={i}>
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={p.r * 2.8}
+                fill={`rgba(145, 185, 255, ${p.alpha * 0.35})`}
+              />
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={p.r * 0.85}
+                fill={`rgba(240, 247, 255, ${p.alpha})`}
+              />
+            </g>
+          ))}
+        </svg>
       </div>
     </div>
   );
