@@ -1,0 +1,245 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  html,
+  body,
+  #root {
+    background-color: #030511;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+.font-display {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Headline text gradients matching the reference */
+.text-lumine-gradient {
+  background: linear-gradient(180deg, #a8c1ff 0%, #6d8cf8 55%, #5875e8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-lumine-gradient-inline {
+  background: linear-gradient(95deg, #ffffff 0%, #eef3ff 12%, #9eb7ff 48%, #6382f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Primary CTA Button with white-to-periwinkle vertical gradient */
+.btn-neone-primary {
+  background: linear-gradient(180deg, #ffffff 0%, #f3f6ff 35%, #9cb5ff 100%);
+  box-shadow:
+    0 8px 28px -4px rgba(105, 142, 255, 0.45),
+    0 0 16px rgba(130, 165, 255, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.95);
+  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 160ms cubic-bezier(0.16, 1, 0.3, 1), filter 160ms ease;
+}
+
+.btn-neone-primary:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 34px -4px rgba(115, 152, 255, 0.6),
+    0 0 22px rgba(145, 180, 255, 0.38),
+    inset 0 1px 1px rgba(255, 255, 255, 1);
+  filter: brightness(1.03);
+}
+
+.btn-neone-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Watch Demo Button */
+.btn-neone-secondary {
+  background: rgba(13, 19, 42, 0.68);
+  border: 1px solid rgba(125, 152, 232, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 4px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), border-color 160ms ease, background-color 160ms ease;
+}
+
+.btn-neone-secondary:hover {
+  background: rgba(22, 32, 68, 0.78);
+  border-color: rgba(145, 175, 255, 0.38);
+  transform: translateY(-1px);
+}
+
+.btn-neone-secondary:active {
+  transform: translateY(0);
+}
+
+/* Early Access Beta Pill */
+.badge-neone-beta {
+  background: linear-gradient(180deg, rgba(32, 45, 90, 0.62) 0%, rgba(19, 27, 58, 0.68) 100%);
+  border: 1px solid rgba(132, 162, 252, 0.26);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 4px 18px rgba(0, 0, 0, 0.4),
+    0 0 24px rgba(85, 125, 255, 0.15);
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+.animate-horizon-pulse {
+  animation: pulse-subtle 6s ease-in-out infinite;
+}
+
+@keyframes neone-marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-neone-marquee {
+  display: flex;
+  width: max-content;
+  animation: neone-marquee 34s linear infinite;
+}
+
+.animate-neone-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-reviews-marquee {
+  display: flex;
+  width: max-content;
+  animation: neone-marquee 52s linear infinite;
+}
+
+.animate-reviews-marquee:hover {
+  animation-play-state: paused;
+}
+
+.marquee-fade-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 6%,
+    black 18%,
+    black 82%,
+    rgba(0, 0, 0, 0.25) 94%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 6%,
+    black 18%,
+    black 82%,
+    rgba(0, 0, 0, 0.25) 94%,
+    transparent 100%
+  );
+}
+
+/* Continuous Right-to-Left Single LED Row Scroll */
+@keyframes led-scroll-rtl {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-led-rtl {
+  display: flex;
+  width: max-content;
+  animation: led-scroll-rtl 22s linear infinite;
+}
+
+/* Effect 1: Cobalt Wave */
+@keyframes led-wave-pulse {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1) drop-shadow(0 0 10px rgba(110, 155, 255, 0.85));
+  }
+  50% {
+    opacity: 0.78;
+    filter: brightness(1.35) drop-shadow(0 0 20px rgba(160, 210, 255, 1));
+  }
+}
+
+/* Effect 2: Amber Matrix Strobe */
+@keyframes led-amber-strobe {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1.15) drop-shadow(0 0 14px rgba(255, 180, 30, 0.95));
+  }
+  25% {
+    opacity: 0.65;
+    filter: brightness(0.85) drop-shadow(0 0 6px rgba(255, 140, 0, 0.6));
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.35) drop-shadow(0 0 22px rgba(255, 210, 80, 1));
+  }
+  75% {
+    opacity: 0.82;
+    filter: brightness(0.95) drop-shadow(0 0 10px rgba(255, 165, 20, 0.8));
+  }
+}
+
+/* Effect 3: Cyan-Electric Chase */
+@keyframes led-prism-chase {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: hue-rotate(0deg) brightness(1.15) drop-shadow(0 0 14px rgba(56, 189, 248, 0.9));
+  }
+  50% {
+    transform: translateY(-1.5px) scale(1.03);
+    filter: hue-rotate(45deg) brightness(1.35) drop-shadow(0 0 22px rgba(129, 140, 248, 1));
+  }
+}
+
+.led-effect-wave {
+  animation: led-wave-pulse 1.8s ease-in-out infinite;
+}
+
+.led-effect-strobe {
+  animation: led-amber-strobe 0.9s steps(2, end) infinite;
+}
+
+.led-effect-prism {
+  animation: led-prism-chase 1.6s ease-in-out infinite;
+}
+
+/* Physical LED Dot Matrix Grid Overlay */
+.led-diode-grid {
+  background-image: radial-gradient(rgba(140, 175, 255, 0.16) 1px, transparent 1.2px);
+  background-size: 5px 5px;
+}
+
+.led-scanline-mask {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.32) 3px,
+    rgba(0, 0, 0, 0.32) 4px
+  );
+}
+

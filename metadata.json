@@ -1,0 +1,6 @@
+{
+  "name": "NEONE — Lumine Insights",
+  "description": "A minimal AI-powered system that transforms complex workflows into clear, glowing, effortless structures — helping you ship ideas faster.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
