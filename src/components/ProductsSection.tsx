@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
 import { ShoppingBag, Plus, Check, X, Minus, ArrowRight, Cpu } from 'lucide-react';
-import lumineCoreImg from '../assets/images/product_lumine_core_node_1791486026734.jpg';
-import neonePulseImg from '../assets/images/product_neone_pulse_dock_1791486039855.jpg';
-import aetherFiberImg from '../assets/images/product_aether_fiber_bridge_1791486049720.jpg';
-import chronosSyncImg from '../assets/images/product_chronos_sync_key_1791486059501.jpg';
-import raydiantDisplayImg from '../assets/images/product_raydiant_display_hub_1791486069740.jpg';
-import kinetixArrayImg from '../assets/images/product_kinetix_array_module_1791486079891.jpg';
 
 export interface Product {
   id: string;
@@ -22,7 +16,7 @@ const PRODUCTS: Product[] = [
     description:
       'Dedicated local neural compute cube that synthesizes distributed workflow streams with zero cloud latency.',
     price: 890,
-    image: lumineCoreImg,
+    image: '/src/assets/images/product_lumine_core_node_1791486026734.jpg',
   },
   {
     id: 'neone-pulse-dock',
@@ -30,7 +24,7 @@ const PRODUCTS: Product[] = [
     description:
       'Precision-milled dark titanium desktop dial for real-time pipeline throttling, state scrubbing, and instant rollback.',
     price: 420,
-    image: neonePulseImg,
+    image: '/src/assets/images/product_neone_pulse_dock_1791486039855.jpg',
   },
   {
     id: 'aether-fiber-bridge',
@@ -38,7 +32,7 @@ const PRODUCTS: Product[] = [
     description:
       'Ultra-low-loss 100GbE fiber-optic ingestion switch with hardware-level schema normalization and packet tagging.',
     price: 640,
-    image: aetherFiberImg,
+    image: '/src/assets/images/product_aether_fiber_bridge_1791486049720.jpg',
   },
   {
     id: 'chronos-sync-key',
@@ -46,7 +40,7 @@ const PRODUCTS: Product[] = [
     description:
       'Pocket-sized gunmetal cryptographic hardware key for zero-trust deployment signing and production gate approval.',
     price: 180,
-    image: chronosSyncImg,
+    image: '/src/assets/images/product_chronos_sync_key_1791486059501.jpg',
   },
   {
     id: 'raydiant-display-hub',
@@ -54,7 +48,7 @@ const PRODUCTS: Product[] = [
     description:
       'Frameless smoked-glass ambient desk display rendering live workflow health, throughput arcs, and anomaly alerts.',
     price: 540,
-    image: raydiantDisplayImg,
+    image: '/src/assets/images/product_raydiant_display_hub_1791486069740.jpg',
   },
   {
     id: 'kinetix-array-module',
@@ -62,7 +56,7 @@ const PRODUCTS: Product[] = [
     description:
       'Modular six-blade carbon-fiber processing cluster engineered for high-concurrency enterprise DAG execution.',
     price: 1490,
-    image: kinetixArrayImg,
+    image: '/src/assets/images/product_kinetix_array_module_1791486079891.jpg',
   },
 ];
 

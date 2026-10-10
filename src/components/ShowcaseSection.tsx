@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
 import { MapPin, ArrowUpRight, X, ChevronLeft, ChevronRight, Building2 } from 'lucide-react';
-import vercorFacadeImg from '../assets/images/showcase_vercor_led_facade_1791489250453.jpg';
-import aetherSolarImg from '../assets/images/showcase_aether_solar_array_1791489260407.jpg';
-import chronosWallImg from '../assets/images/showcase_chronos_command_wall_1791489271285.jpg';
-import kinetixBillboardImg from '../assets/images/showcase_kinetix_arena_billboard_1791489280850.jpg';
-import raydiantRetailImg from '../assets/images/showcase_raydiant_retail_atrium_1791489293008.jpg';
-import hyperionCanopyImg from '../assets/images/showcase_hyperion_transit_canopy_1791489306681.jpg';
 
 export interface ShowcaseWork {
   id: string;
@@ -28,7 +22,7 @@ const SHOWCASE_WORKS: ShowcaseWork[] = [
     address: '440 Teheran-ro, Gangnam-gu, Seoul, South Korea',
     year: '2026',
     scope: '1,420 m² P3.9 Weatherproof Outdoor Curve · HEYCH Sync OS',
-    image: vercorFacadeImg,
+    image: '/src/assets/images/showcase_vercor_led_facade_1791489250453.jpg',
     gridSpan: 'lg:col-span-7',
   },
   {
@@ -39,7 +33,7 @@ const SHOWCASE_WORKS: ShowcaseWork[] = [
     address: '1280 Solar Pkwy, Boulder City, NV 89005, USA',
     year: '2025',
     scope: '140 kW Monocrystalline Canopy · LiFePO4 Reserve Bank',
-    image: aetherSolarImg,
+    image: '/src/assets/images/showcase_aether_solar_array_1791489260407.jpg',
     gridSpan: 'lg:col-span-5',
   },
   {
@@ -50,7 +44,7 @@ const SHOWCASE_WORKS: ShowcaseWork[] = [
     address: '85 Broad St, Financial District, New York, NY 10004',
     year: '2025',
     scope: '18-Meter Seamless COB Micro-LED · 7,680 Hz Refresh',
-    image: chronosWallImg,
+    image: '/src/assets/images/showcase_chronos_command_wall_1791489271285.jpg',
     gridSpan: 'lg:col-span-5',
   },
   {
@@ -61,7 +55,7 @@ const SHOWCASE_WORKS: ShowcaseWork[] = [
     address: '100 Peninsula Square, Greenwich, London SE10 0DX, UK',
     year: '2024',
     scope: '64-Meter Circular LED Ribbon · Voice & DMX Scene Routing',
-    image: kinetixBillboardImg,
+    image: '/src/assets/images/showcase_kinetix_arena_billboard_1791489280850.jpg',
     gridSpan: 'lg:col-span-7',
   },
   {
@@ -72,7 +66,7 @@ const SHOWCASE_WORKS: ShowcaseWork[] = [
     address: '5-7-21 Jingumae, Shibuya-ku, Tokyo 150-0001, Japan',
     year: '2024',
     scope: 'Floor-to-Ceiling Acoustic Glass LED · Alexa Scene Presets',
-    image: raydiantRetailImg,
+    image: '/src/assets/images/showcase_raydiant_retail_atrium_1791489293008.jpg',
     gridSpan: 'lg:col-span-6',
   },
   {
@@ -83,7 +77,7 @@ const SHOWCASE_WORKS: ShowcaseWork[] = [
     address: 'Europa-Allee 64, 60327 Frankfurt am Main, Germany',
     year: '2023',
     scope: 'Solar-Powered Transit Roof · High-Contrast Passenger Boards',
-    image: hyperionCanopyImg,
+    image: '/src/assets/images/showcase_hyperion_transit_canopy_1791489306681.jpg',
     gridSpan: 'lg:col-span-6',
   },
 ];
