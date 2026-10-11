@@ -3,29 +3,24 @@ import React from 'react';
 interface StatItem {
   value: string;
   label: string;
-  context: string;
 }
 
 const STATS: StatItem[] = [
   {
-    value: '14,800 m²',
-    label: 'Active LED Matrix Surface',
-    context: 'Calibrated outdoor billboards & indoor COB walls across 4 continents',
+    value: '130+',
+    label: 'Companies worked with',
   },
   {
-    value: '99.995%',
-    label: 'Measured Telemetry Uptime',
-    context: 'Verified across all HEYCH Lumine edge nodes over the past 24 months',
+    value: '30+',
+    label: 'Screens installed',
   },
   {
-    value: '4.2 MW',
-    label: 'Autonomous Solar Capacity',
-    context: 'Off-grid monocrystalline canopies & LiFePO4 reserve banks deployed',
+    value: '40+',
+    label: 'Solar inverters installed',
   },
   {
-    value: '< 120 ms',
-    label: 'Scene & Voice Execution',
-    context: 'End-to-end hardware switching latency via local Alexa & DMX routing',
+    value: '10+',
+    label: 'Workers trained',
   },
 ];
 
@@ -50,7 +45,7 @@ export const StatsSection: React.FC = () => {
           {STATS.map((stat, idx) => (
             <div
               key={stat.label}
-              className={`flex flex-col justify-between ${
+              className={`flex flex-col justify-center ${
                 idx === 0
                   ? 'lg:pr-8'
                   : idx === STATS.length - 1
@@ -58,17 +53,12 @@ export const StatsSection: React.FC = () => {
                   : 'lg:px-8'
               }`}
             >
-              <div>
-                <div className="font-display text-3xl sm:text-4xl lg:text-[42px] font-semibold tracking-[-0.03em] text-white tabular-nums">
-                  <span className="text-lumine-gradient">{stat.value}</span>
-                </div>
-                <div className="mt-2 font-display text-sm sm:text-[15px] font-semibold text-white tracking-[-0.01em]">
-                  {stat.label}
-                </div>
+              <div className="font-display text-3xl sm:text-4xl lg:text-[44px] font-semibold tracking-[-0.03em] text-white tabular-nums">
+                <span className="text-lumine-gradient">{stat.value}</span>
               </div>
-              <p className="mt-2 text-xs leading-[1.55] text-[#c8d6f5]/60">
-                {stat.context}
-              </p>
+              <div className="mt-2 font-display text-sm sm:text-[15px] font-medium text-[#d5e1fc]/85 tracking-[-0.01em]">
+                {stat.label}
+              </div>
             </div>
           ))}
         </div>

@@ -1,103 +1,52 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Plus, Check, X, Minus, ArrowRight, Cpu } from 'lucide-react';
+import { ArrowUpRight, Cpu } from 'lucide-react';
 
 export interface Product {
   id: string;
   title: string;
-  description: string;
-  price: number;
   image: string;
 }
 
 const PRODUCTS: Product[] = [
   {
-    id: 'lumine-core-node',
-    title: 'Lumine Core Node',
-    description:
-      'Dedicated local neural compute cube that synthesizes distributed workflow streams with zero cloud latency.',
-    price: 890,
-    image: '/src/assets/images/product_lumine_core_node_1791486026734.jpg',
+    id: 'alexa',
+    title: 'Alexa',
+    image: '/src/assets/images/product_alexa_smart_hub_1791758773891.jpg',
   },
   {
-    id: 'neone-pulse-dock',
-    title: 'Neone Pulse Controller',
-    description:
-      'Precision-milled dark titanium desktop dial for real-time pipeline throttling, state scrubbing, and instant rollback.',
-    price: 420,
-    image: '/src/assets/images/product_neone_pulse_dock_1791486039855.jpg',
+    id: 'solar-lamp-lightbox',
+    title: 'Solar lamp lightbox',
+    image: '/src/assets/images/product_solar_lamp_lightbox_1791758782963.jpg',
   },
   {
-    id: 'aether-fiber-bridge',
-    title: 'Aether Optical Bridge',
-    description:
-      'Ultra-low-loss 100GbE fiber-optic ingestion switch with hardware-level schema normalization and packet tagging.',
-    price: 640,
-    image: '/src/assets/images/product_aether_fiber_bridge_1791486049720.jpg',
+    id: 'car-lightbox',
+    title: 'Car lightbox',
+    image: '/src/assets/images/product_car_roof_lightbox_1791758792674.jpg',
   },
   {
-    id: 'chronos-sync-key',
-    title: 'Chronos Biometric Key',
-    description:
-      'Pocket-sized gunmetal cryptographic hardware key for zero-trust deployment signing and production gate approval.',
-    price: 180,
-    image: '/src/assets/images/product_chronos_sync_key_1791486059501.jpg',
+    id: '3d-illuminated-signages',
+    title: '3d Illuminated signages',
+    image: '/src/assets/images/product_3d_illuminated_signage_1791758802830.jpg',
   },
   {
-    id: 'raydiant-display-hub',
-    title: 'Raydiant Horizon Display',
-    description:
-      'Frameless smoked-glass ambient desk display rendering live workflow health, throughput arcs, and anomaly alerts.',
-    price: 540,
-    image: '/src/assets/images/product_raydiant_display_hub_1791486069740.jpg',
+    id: 'led-billboard-screens',
+    title: 'LED billboard screens',
+    image: '/src/assets/images/product_led_billboard_screen_1791758813032.jpg',
   },
   {
-    id: 'kinetix-array-module',
-    title: 'Kinetix Neural Array',
-    description:
-      'Modular six-blade carbon-fiber processing cluster engineered for high-concurrency enterprise DAG execution.',
-    price: 1490,
-    image: '/src/assets/images/product_kinetix_array_module_1791486079891.jpg',
+    id: 'electronic-car-tints',
+    title: 'Electronic car tints',
+    image: '/src/assets/images/product_electronic_car_tint_1791758822785.jpg',
   },
 ];
 
+const getProductWhatsAppUrl = (productTitle: string) =>
+  `https://wa.me/2347035676769?text=${encodeURIComponent(
+    `Hello HEYCH, I would like to get the ${productTitle}.`
+  )}`;
+
 export const ProductsSection: React.FC = () => {
-  const [cart, setCart] = useState<Record<string, number>>({});
-  const [justAddedId, setJustAddedId] = useState<string | null>(null);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
-  const [checkoutSuccess, setCheckoutSuccess] = useState(false);
-
-  const totalItems = Object.values(cart).reduce((acc, qty) => acc + qty, 0);
-  const subtotal = PRODUCTS.reduce(
-    (sum, p) => sum + p.price * (cart[p.id] || 0),
-    0
-  );
-
-  const handleAddToCart = (product: Product, e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    setCart((prev) => ({
-      ...prev,
-      [product.id]: (prev[product.id] || 0) + 1,
-    }));
-    setCheckoutSuccess(false);
-    setJustAddedId(product.id);
-    setTimeout(() => {
-      setJustAddedId((curr) => (curr === product.id ? null : curr));
-    }, 1400);
-  };
-
-  const updateQuantity = (productId: string, delta: number) => {
-    setCart((prev) => {
-      const nextQty = (prev[productId] || 0) + delta;
-      if (nextQty <= 0) {
-        const copy = { ...prev };
-        delete copy[productId];
-        return copy;
-      }
-      return { ...prev, [productId]: nextQty };
-    });
-  };
 
   return (
     <section
@@ -117,48 +66,30 @@ export const ProductsSection: React.FC = () => {
 
       <div className="relative max-w-[1220px] mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12 sm:mb-14">
-          <div>
-            <p className="text-xs font-medium tracking-[0.04em] text-[#8ba8ff] mb-2.5">
-              Lumine Hardware Ecosystem
-            </p>
-            <h2
-              id="products-heading"
-              className="font-display text-2xl sm:text-4xl font-semibold tracking-[-0.025em] text-white"
-            >
-              Engineered for <span className="text-lumine-gradient">Tactile Velocity</span>
-            </h2>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <p className="hidden md:block text-sm text-[#c8d6f5]/65 max-w-xs">
-              Precision hardware modules that pair seamlessly with your NEONE workspace.
-            </p>
-            <button
-              type="button"
-              onClick={() => setIsCartOpen(true)}
-              className="btn-neone-secondary inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white cursor-pointer whitespace-nowrap shrink-0"
-            >
-              <ShoppingBag className="w-4 h-4 text-[#9cb5ff]" />
-              <span>Bag</span>
-              <span className="tabular-nums text-[#a8c1ff] font-semibold">
-                ({totalItems})
-              </span>
-            </button>
-          </div>
+        <div className="mb-12 sm:mb-14">
+          <p className="text-xs font-medium tracking-[0.04em] text-[#8ba8ff] mb-2.5">
+            What we sell
+          </p>
+          <h2
+            id="products-heading"
+            className="font-display text-2xl sm:text-4xl font-semibold tracking-[-0.025em] text-white"
+          >
+            Quality Products <span className="text-lumine-gradient">Made for You</span>
+          </h2>
         </div>
 
-        {/* Product Grid: 2 in a row for mobile view (grid-cols-2), 3 for desktop (lg:grid-cols-3), 6 products total */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6 lg:gap-8">
+        {/* Product Grid: 1 column in mobile view (grid-cols-1), 3 for desktop (lg:grid-cols-3), 6 products total */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
           {PRODUCTS.map((product) => {
-            const isAdded = justAddedId === product.id;
             const hasImgError = imageErrors[product.id];
 
             return (
-              <article
+              <a
                 key={product.id}
-                onClick={() => setSelectedProduct(product)}
-                className="group relative flex flex-col rounded-2xl bg-[#070b1e]/90 border border-[#6c8eff]/18 hover:border-[#8ba8ff]/45 transition-all duration-200 overflow-hidden cursor-pointer hover:-translate-y-0.5 shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
+                href={getProductWhatsAppUrl(product.title)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative flex flex-col rounded-2xl bg-[#070b1e]/90 border border-[#6c8eff]/18 hover:border-[#8ba8ff]/45 transition-all duration-200 overflow-hidden cursor-pointer hover:-translate-y-0.5 shadow-[0_10px_30px_rgba(0,0,0,0.45)] no-underline"
               >
                 {/* Product Image Container (4:3 aspect ratio) */}
                 <div className="relative w-full aspect-[4/3] bg-[#050816] overflow-hidden border-b border-[#6c8eff]/12">
@@ -192,232 +123,22 @@ export const ProductsSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Product Card Body: Title, Description, and Price */}
-                <div className="flex-1 flex flex-col justify-between p-3.5 sm:p-5 lg:p-6">
-                  <div>
-                    <h3 className="font-display text-sm sm:text-base lg:text-[17px] font-semibold text-white tracking-[-0.01em] group-hover:text-[#b8ceff] transition-colors line-clamp-1">
-                      {product.title}
-                    </h3>
-                    <p className="mt-1.5 text-[11.5px] sm:text-[13px] leading-[1.55] text-[#c8d6f5]/68 line-clamp-2 sm:line-clamp-3">
-                      {product.description}
-                    </p>
-                  </div>
+                {/* Product Card Body: Title and "Get" Button (No prices or descriptions) */}
+                <div className="p-5 sm:p-6 flex items-center justify-between gap-4">
+                  <h3 className="font-display text-base sm:text-[17px] font-semibold text-white tracking-[-0.01em] group-hover:text-[#b8ceff] transition-colors">
+                    {product.title}
+                  </h3>
 
-                  {/* Price & Quick-Add Row */}
-                  <div className="mt-4 pt-3.5 border-t border-white/[0.07] flex items-center justify-between gap-2">
-                    <span className="font-display text-sm sm:text-base lg:text-[17px] font-semibold text-white tabular-nums">
-                      ${product.price.toLocaleString()}
-                    </span>
-
-                    <button
-                      type="button"
-                      onClick={(e) => handleAddToCart(product, e)}
-                      className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-medium transition-all duration-150 cursor-pointer whitespace-nowrap shrink-0 ${
-                        isAdded
-                          ? 'bg-[#6d8cf8]/25 text-[#c5d6ff] border border-[#8ba8ff]/50'
-                          : 'bg-white/[0.07] hover:bg-white/[0.14] text-white/90 border border-white/10'
-                      }`}
-                    >
-                      {isAdded ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-[#a8c1ff]" />
-                          <span>Added</span>
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="w-3.5 h-3.5 text-[#9cb5ff]" />
-                          <span>Add</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-white/[0.08] group-hover:bg-[#6d8cf8]/25 text-white group-hover:text-[#d8e3ff] border border-white/10 group-hover:border-[#8ba8ff]/50 transition-all duration-150 whitespace-nowrap shrink-0">
+                    <span>Get</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#9cb5ff]" />
+                  </span>
                 </div>
-              </article>
+              </a>
             );
           })}
         </div>
       </div>
-
-      {/* Product Detail Quick-View Modal */}
-      {selectedProduct && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#02040d]/80 backdrop-blur-md"
-          onClick={() => setSelectedProduct(null)}
-        >
-          <div
-            className="relative w-full max-w-lg rounded-2xl bg-[#090e24] border border-[#789aff]/30 shadow-[0_24px_80px_rgba(0,0,0,0.85)] overflow-hidden text-white"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setSelectedProduct(null)}
-              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-lg bg-black/50 hover:bg-black/70 flex items-center justify-center text-white/75 hover:text-white transition-colors cursor-pointer"
-              aria-label="Close product detail"
-            >
-              <X className="w-4 h-4" />
-            </button>
-
-            <div className="aspect-[4/3] w-full bg-[#050816] overflow-hidden">
-              <img
-                src={selectedProduct.image}
-                alt={selectedProduct.title}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="p-6">
-              <div className="flex items-baseline justify-between gap-4">
-                <h3 className="font-display text-xl font-semibold text-white">
-                  {selectedProduct.title}
-                </h3>
-                <span className="font-display text-xl font-semibold text-[#a8c1ff] tabular-nums">
-                  ${selectedProduct.price.toLocaleString()}
-                </span>
-              </div>
-              <p className="mt-2.5 text-sm text-[#c8d6f5]/75 leading-relaxed">
-                {selectedProduct.description}
-              </p>
-
-              <div className="mt-6 flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleAddToCart(selectedProduct);
-                    setSelectedProduct(null);
-                    setIsCartOpen(true);
-                  }}
-                  className="flex-1 btn-neone-primary py-3 rounded-xl text-sm font-semibold text-[#080c1a] cursor-pointer whitespace-nowrap"
-                >
-                  Add to Bag — ${selectedProduct.price.toLocaleString()}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSelectedProduct(null)}
-                  className="btn-neone-secondary px-4 py-3 rounded-xl text-sm font-medium text-white/80 cursor-pointer whitespace-nowrap"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Slide-Over Cart Drawer */}
-      {isCartOpen && (
-        <div
-          className="fixed inset-0 z-50 flex justify-end bg-[#02040d]/75 backdrop-blur-sm"
-          onClick={() => setIsCartOpen(false)}
-        >
-          <div
-            className="relative w-full max-w-md h-full bg-[#080d21] border-l border-[#789aff]/25 p-6 flex flex-col justify-between text-white shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
-              <div className="flex items-center gap-2.5">
-                <ShoppingBag className="w-4 h-4 text-[#9cb5ff]" />
-                <h3 className="font-display text-base font-semibold">
-                  Your NEONE Bag ({totalItems})
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsCartOpen(false)}
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                aria-label="Close bag"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto py-4 space-y-3">
-              {checkoutSuccess ? (
-                <div className="my-12 p-6 rounded-2xl bg-[#10193a]/90 border border-[#7c9aff]/35 text-center">
-                  <div className="w-10 h-10 rounded-full bg-[#6d8cf8]/20 border border-[#8ba8ff]/40 flex items-center justify-center mx-auto mb-3 text-[#a8c1ff]">
-                    <Check className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-display text-base font-semibold text-white">
-                    Order #1084 Confirmed
-                  </h4>
-                  <p className="mt-1.5 text-xs text-[#c8d6f5]/75 leading-relaxed">
-                    Your Lumine hardware modules are being provisioned and pre-linked to your workspace.
-                  </p>
-                </div>
-              ) : totalItems === 0 ? (
-                <div className="my-16 text-center text-sm text-[#c8d6f5]/50">
-                  Your bag is currently empty. Select any product card to add hardware modules.
-                </div>
-              ) : (
-                PRODUCTS.filter((p) => cart[p.id] > 0).map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center gap-3.5 p-3 rounded-xl bg-[#0d1430]/80 border border-white/10"
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      referrerPolicy="no-referrer"
-                      className="w-16 h-12 rounded-lg object-cover bg-[#050816] shrink-0"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-xs font-semibold text-white truncate">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-[#a8c1ff] tabular-nums mt-0.5">
-                        ${item.price.toLocaleString()}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => updateQuantity(item.id, -1)}
-                        className="w-6 h-6 rounded-md bg-white/10 hover:bg-white/20 flex items-center justify-center text-white cursor-pointer"
-                        aria-label="Decrease quantity"
-                      >
-                        <Minus className="w-3 h-3" />
-                      </button>
-                      <span className="text-xs font-medium tabular-nums w-4 text-center">
-                        {cart[item.id]}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => updateQuantity(item.id, 1)}
-                        className="w-6 h-6 rounded-md bg-white/10 hover:bg-white/20 flex items-center justify-center text-white cursor-pointer"
-                        aria-label="Increase quantity"
-                      >
-                        <Plus className="w-3 h-3" />
-                      </button>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-
-            {totalItems > 0 && !checkoutSuccess && (
-              <div className="pt-4 border-t border-white/10 space-y-4">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-[#c8d6f5]/70">Subtotal</span>
-                  <span className="font-display text-base font-semibold text-white tabular-nums">
-                    ${subtotal.toLocaleString()}
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setCheckoutSuccess(true);
-                    setCart({});
-                  }}
-                  className="w-full btn-neone-primary py-3 rounded-xl text-sm font-semibold text-[#080c1a] flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <span>Complete Order</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </section>
   );
 };

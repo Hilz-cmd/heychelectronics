@@ -140,7 +140,7 @@ export const CompanyMarquee: React.FC = () => {
       <div className="max-w-[1220px] mx-auto px-6">
         {/* Quiet editorial label */}
         <p className="text-center text-[12.5px] font-medium tracking-[0.02em] text-[#b4c6f0]/50 mb-8">
-          Trusted by engineering teams shipping complex workflows at scale
+          Worked with many prestigious companies across Nigeria
         </p>
 
         {/* Continuous Horizontal Marquee Container */}
