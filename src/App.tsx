@@ -12,6 +12,7 @@ import { ServicesSection } from './components/ServicesSection';
 import { StatsSection } from './components/StatsSection';
 import { ShowcaseSection } from './components/ShowcaseSection';
 import { ReviewsSection } from './components/ReviewsSection';
+import { MapSection } from './components/MapSection';
 import { AboutSection } from './components/AboutSection';
 import { FaqSection } from './components/FaqSection';
 import { ContactAndFooterSection } from './components/ContactAndFooterSection';
@@ -177,7 +178,10 @@ export default function App() {
       {/* Reviews Section (7 reviews scrolling horizontally continuously, each with review, name, and "Client") */}
       <ReviewsSection />
 
-      {/* Brief About Us Section Directly Under the Reviews Section */}
+      {/* Simple Map Section Directly Above About Us Section (Not in Navbar) */}
+      <MapSection />
+
+      {/* Brief About Us Section */}
       <AboutSection />
 
       {/* FAQs Section Above Contact Us Section */}
