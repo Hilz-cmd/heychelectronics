@@ -13,6 +13,7 @@ import { StatsSection } from './components/StatsSection';
 import { ShowcaseSection } from './components/ShowcaseSection';
 import { ReviewsSection } from './components/ReviewsSection';
 import { AboutSection } from './components/AboutSection';
+import { FaqSection } from './components/FaqSection';
 import { ContactAndFooterSection } from './components/ContactAndFooterSection';
 
 const WHATSAPP_INSTALLATION_URL = `https://wa.me/2347035676769?text=${encodeURIComponent(
@@ -88,6 +89,12 @@ export default function App() {
               className="hover:text-white transition-colors py-1 whitespace-nowrap"
             >
               About Us
+            </a>
+            <a
+              href="#faqs"
+              className="hover:text-white transition-colors py-1 whitespace-nowrap"
+            >
+              FAQs
             </a>
             <a
               href="#contact"
@@ -172,6 +179,9 @@ export default function App() {
 
       {/* Brief About Us Section Directly Under the Reviews Section */}
       <AboutSection />
+
+      {/* FAQs Section Above Contact Us Section */}
+      <FaqSection />
 
       {/* Centered Contact Us Section ("Get us in WhatsApp") + Footer with Social Icons & Full-Width LED "HEYCH" */}
       <ContactAndFooterSection />
