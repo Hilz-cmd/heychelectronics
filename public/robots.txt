@@ -1,0 +1,19 @@
+# Robots.txt for HEYCH
+# Allow all search engines (Googlebot, Bingbot, etc.) to crawl the entire site
+User-agent: *
+Allow: /
+
+# Googlebot specific rules
+User-agent: Googlebot
+Allow: /
+
+# Google Image Search bot
+User-agent: Googlebot-Image
+Allow: /
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.jpg$
+Allow: /*.png$
+
+# XML Sitemap
+Sitemap: https://heychelectronics.com/sitemap.xml

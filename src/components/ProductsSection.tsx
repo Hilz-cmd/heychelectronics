@@ -11,32 +11,32 @@ const PRODUCTS: Product[] = [
   {
     id: 'alexa',
     title: 'Alexa',
-    image: '/src/assets/images/product_alexa_smart_hub_1791758773891.jpg',
+    image: '/alexa.webp',
   },
   {
     id: 'solar-lamp-lightbox',
     title: 'Solar lamp lightbox',
-    image: '/src/assets/images/product_solar_lamp_lightbox_1791758782963.jpg',
+    image: '/solar-lamp-lightbox.webp',
   },
   {
     id: 'car-lightbox',
     title: 'Car lightbox',
-    image: '/src/assets/images/product_car_roof_lightbox_1791758792674.jpg',
+    image: '/car-lightbox.webp',
   },
   {
     id: '3d-illuminated-signages',
     title: '3d Illuminated signages',
-    image: '/src/assets/images/product_3d_illuminated_signage_1791758802830.jpg',
+    image: '/3d-illuminated-signages.webp',
   },
   {
     id: 'led-billboard-screens',
     title: 'LED billboard screens',
-    image: '/src/assets/images/product_led_billboard_screen_1791758813032.jpg',
+    image: '/led-billboard-screens.webp',
   },
   {
     id: 'electronic-car-tints',
     title: 'Electronic car tints',
-    image: '/src/assets/images/product_electronic_car_tint_1791758822785.jpg',
+    image: '/electronic-car-tints.webp',
   },
 ];
 

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Homepage -->
+  <url>
+    <loc>https://heychelectronics.com/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://heychelectronics.com/heych.svg</image:loc>
+      <image:title>HEYCH Logo</image:title>
+      <image:caption>HEYCH - Innovating Better Living</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Products Section -->
+  <url>
+    <loc>https://heychelectronics.com/#products</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://heychelectronics.com/alexa.webp</image:loc>
+      <image:title>Alexa Smart Hub</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/solar-lamp-lightbox.webp</image:loc>
+      <image:title>Solar Lamp Lightbox</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/car-lightbox.webp</image:loc>
+      <image:title>Car Lightbox</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/3d-illuminated-signages.webp</image:loc>
+      <image:title>3D Illuminated Signages</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/led-billboard-screens.webp</image:loc>
+      <image:title>LED Billboard Screens</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/electronic-car-tints.webp</image:loc>
+      <image:title>Electronic Car Tints</image:title>
+    </image:image>
+  </url>
+
+  <!-- Services Section -->
+  <url>
+    <loc>https://heychelectronics.com/#services</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Showcase Section -->
+  <url>
+    <loc>https://heychelectronics.com/#showcase</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://heychelectronics.com/thirteen.webp</image:loc>
+      <image:title>HEYCH Installation Completed 2016</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/thirty-one.webp</image:loc>
+      <image:title>HEYCH Installation Completed 2018</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/thirty-seven.webp</image:loc>
+      <image:title>HEYCH Installation Completed 2020</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/thirty-two.webp</image:loc>
+      <image:title>HEYCH Installation Completed 2023</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/three.webp</image:loc>
+      <image:title>HEYCH Installation Completed 2025</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://heychelectronics.com/twenty-five.webp</image:loc>
+      <image:title>HEYCH Installation Completed 2026</image:title>
+    </image:image>
+  </url>
+
+  <!-- Gallery Page -->
+  <url>
+    <loc>https://heychelectronics.com/#gallery</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- About Us Section -->
+  <url>
+    <loc>https://heychelectronics.com/#about</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- FAQs Section -->
+  <url>
+    <loc>https://heychelectronics.com/#faqs</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Contact Us Section -->
+  <url>
+    <loc>https://heychelectronics.com/#contact</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+</urlset>

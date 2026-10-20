@@ -1,98 +1,65 @@
 import React, { useState } from 'react';
-import { MapPin, ArrowUpRight, X, ChevronLeft, ChevronRight, Building2 } from 'lucide-react';
+import { ArrowUpRight, X, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 
 export interface ShowcaseWork {
   id: string;
   index: string;
-  companyName: string;
-  projectTitle: string;
-  address: string;
   year: string;
-  scope: string;
   image: string;
   gridSpan: string;
 }
 
 const SHOWCASE_WORKS: ShowcaseWork[] = [
   {
-    id: 'vercor-seoul',
+    id: 'work-1',
     index: '01',
-    companyName: 'Vercor Holdings',
-    projectTitle: 'Curved Kinetic LED Media Facade',
-    address: '440 Teheran-ro, Gangnam-gu, Seoul, South Korea',
-    year: '2026',
-    scope: '1,420 m² P3.9 Weatherproof Outdoor Curve · HEYCH Sync OS',
-    image: '/src/assets/images/showcase_vercor_led_facade_1791489250453.jpg',
+    year: '2016',
+    image: '/thirteen.webp',
     gridSpan: 'lg:col-span-7',
   },
   {
-    id: 'aether-nevada',
+    id: 'work-2',
     index: '02',
-    companyName: 'AetherLabs Energy',
-    projectTitle: 'Autonomous Solar Canopy & Telemetry Hub',
-    address: '1280 Solar Pkwy, Boulder City, NV 89005, USA',
-    year: '2025',
-    scope: '140 kW Monocrystalline Canopy · LiFePO4 Reserve Bank',
-    image: '/src/assets/images/showcase_aether_solar_array_1791489260407.jpg',
+    year: '2018',
+    image: '/thirty-one.webp',
     gridSpan: 'lg:col-span-5',
   },
   {
-    id: 'chronos-nyc',
+    id: 'work-3',
     index: '03',
-    companyName: 'Chronos Capital',
-    projectTitle: 'Global Telemetry Command Video Wall',
-    address: '85 Broad St, Financial District, New York, NY 10004',
-    year: '2025',
-    scope: '18-Meter Seamless COB Micro-LED · 7,680 Hz Refresh',
-    image: '/src/assets/images/showcase_chronos_command_wall_1791489271285.jpg',
+    year: '2020',
+    image: '/thirty-seven.webp',
     gridSpan: 'lg:col-span-5',
   },
   {
-    id: 'kinetix-london',
+    id: 'work-4',
     index: '04',
-    companyName: 'Kinetix Entertainment',
-    projectTitle: '360° Suspended Plaza Halo Billboard',
-    address: '100 Peninsula Square, Greenwich, London SE10 0DX, UK',
-    year: '2024',
-    scope: '64-Meter Circular LED Ribbon · Voice & DMX Scene Routing',
-    image: '/src/assets/images/showcase_kinetix_arena_billboard_1791489280850.jpg',
+    year: '2023',
+    image: '/thirty-two.webp',
     gridSpan: 'lg:col-span-7',
   },
   {
-    id: 'raydiant-tokyo',
+    id: 'work-5',
     index: '05',
-    companyName: 'Raydiant Retail Group',
-    projectTitle: 'Smoked-Glass Interactive Flagship Screens',
-    address: '5-7-21 Jingumae, Shibuya-ku, Tokyo 150-0001, Japan',
-    year: '2024',
-    scope: 'Floor-to-Ceiling Acoustic Glass LED · Alexa Scene Presets',
-    image: '/src/assets/images/showcase_raydiant_retail_atrium_1791489293008.jpg',
+    year: '2025',
+    image: '/three.webp',
     gridSpan: 'lg:col-span-6',
   },
   {
-    id: 'hyperion-frankfurt',
+    id: 'work-6',
     index: '06',
-    companyName: 'Hyperion Mobility',
-    projectTitle: 'Solar Transit Pavilion & Arrival Matrix',
-    address: 'Europa-Allee 64, 60327 Frankfurt am Main, Germany',
-    year: '2023',
-    scope: 'Solar-Powered Transit Roof · High-Contrast Passenger Boards',
-    image: '/src/assets/images/showcase_hyperion_transit_canopy_1791489306681.jpg',
+    year: '2026',
+    image: '/twenty-five.webp',
     gridSpan: 'lg:col-span-6',
   },
 ];
 
-const YEAR_FILTERS = ['All', '2026', '2025', '2024', '2023'] as const;
+interface ShowcaseSectionProps {
+  onSeeMore?: () => void;
+}
 
-export const ShowcaseSection: React.FC = () => {
-  const [selectedYear, setSelectedYear] = useState<string>('All');
+export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({ onSeeMore }) => {
   const [activeWorkIndex, setActiveWorkIndex] = useState<number | null>(null);
-  const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
-
-  const filteredWorks =
-    selectedYear === 'All'
-      ? SHOWCASE_WORKS
-      : SHOWCASE_WORKS.filter((w) => w.year === selectedYear);
 
   const activeWork =
     activeWorkIndex !== null ? SHOWCASE_WORKS[activeWorkIndex] : null;
@@ -128,11 +95,11 @@ export const ShowcaseSection: React.FC = () => {
       />
 
       <div className="relative max-w-[1220px] mx-auto">
-        {/* Section Header + Interactive Year Filter Controls */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-14">
+        {/* Section Header + See More Action Button (Year filter removed) */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-14">
           <div>
             <p className="text-xs font-medium tracking-[0.04em] text-[#8ba8ff] mb-2.5">
-              Selected Installations · 2023 — 2026
+              Selected Installations · 2016 — 2026
             </p>
             <h2
               id="showcase-heading"
@@ -142,127 +109,76 @@ export const ShowcaseSection: React.FC = () => {
             </h2>
           </div>
 
-          {/* Interactive Year Filter Segmented Controls */}
-          <div className="flex items-center gap-1 p-1 rounded-xl bg-[#070b1e] border border-[#6c8eff]/20 self-start md:self-auto">
-            {YEAR_FILTERS.map((year) => {
-              const isActive = selectedYear === year;
-              return (
-                <button
-                  key={year}
-                  type="button"
-                  onClick={() => setSelectedYear(year)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium tabular-nums transition-all duration-150 cursor-pointer whitespace-nowrap ${
-                    isActive
-                      ? 'bg-[#6d8cf8]/25 text-white border border-[#8ba8ff]/40 shadow-sm'
-                      : 'text-[#b4c6f0]/60 hover:text-white border border-transparent'
-                  }`}
-                >
-                  {year === 'All' ? 'All Works (6)' : year}
-                </button>
-              );
-            })}
-          </div>
+          {/* "See More" Navigation CTA */}
+          <button
+            type="button"
+            onClick={onSeeMore}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-[#6d8cf8]/20 hover:bg-[#6d8cf8]/30 border border-[#8ba8ff]/40 text-white shadow-[0_0_20px_rgba(105,142,255,0.2)] hover:shadow-[0_0_28px_rgba(105,142,255,0.35)] transition-all duration-200 cursor-pointer self-start sm:self-auto"
+          >
+            <span>See More</span>
+            <ArrowRight className="w-4 h-4 text-[#9cb5ff]" />
+          </button>
         </div>
 
-        {/* Asymmetric Architectural Bento Grid (12-col desktop, 1-col mobile, 2-col tablet) */}
+        {/* 6 Past Works Cards: Just Image and Year Completed */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6">
-          {filteredWorks.map((work) => {
-            const fullIdx = SHOWCASE_WORKS.findIndex((w) => w.id === work.id);
-            const hasError = imgErrors[work.id];
+          {SHOWCASE_WORKS.map((work, idx) => (
+            <article
+              key={work.id}
+              onClick={() => setActiveWorkIndex(idx)}
+              className={`group relative rounded-2xl bg-[#070b1e] border border-[#6c8eff]/18 hover:border-[#8ba8ff]/50 overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 shadow-[0_14px_40px_rgba(0,0,0,0.55)] flex flex-col justify-end min-h-[300px] sm:min-h-[360px] ${work.gridSpan}`}
+            >
+              {/* Background Project Image */}
+              <div className="absolute inset-0 bg-[#050816] overflow-hidden">
+                <img
+                  src={work.image}
+                  alt={`Installation completed in ${work.year}`}
+                  loading="lazy"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.includes('/gallery/')) {
+                      target.src = `/gallery${work.image}`;
+                    }
+                  }}
+                  className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-500 ease-out"
+                />
 
-            return (
-              <article
-                key={work.id}
-                onClick={() => setActiveWorkIndex(fullIdx)}
-                className={`group relative rounded-2xl bg-[#070b1e] border border-[#6c8eff]/18 hover:border-[#8ba8ff]/50 overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-0.5 shadow-[0_14px_40px_rgba(0,0,0,0.55)] flex flex-col justify-end min-h-[340px] sm:min-h-[390px] ${
-                  selectedYear === 'All' ? work.gridSpan : 'lg:col-span-6'
-                }`}
-              >
-                {/* Background Project Image */}
-                <div className="absolute inset-0 bg-[#050816] overflow-hidden">
-                  {!hasError ? (
-                    <img
-                      src={work.image}
-                      alt={`${work.companyName} — ${work.projectTitle}`}
-                      referrerPolicy="no-referrer"
-                      onError={() =>
-                        setImgErrors((prev) => ({ ...prev, [work.id]: true }))
-                      }
-                      className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-500 ease-out"
-                    />
-                  ) : (
-                    /* Resilient Fallback Container */
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#0e1738] to-[#040714] text-[#8ba8ff] p-6">
-                      <Building2 className="w-10 h-10 mb-2 opacity-75" />
-                      <span className="text-sm font-medium text-white/80">
-                        {work.companyName}
-                      </span>
-                    </div>
-                  )}
+                {/* Subtle Contrast Scrim */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      'linear-gradient(to top, rgba(3, 5, 17, 0.92) 0%, rgba(4, 8, 24, 0.45) 45%, rgba(3, 5, 17, 0.15) 100%)',
+                  }}
+                />
+              </div>
 
-                  {/* Measured Contrast Scrim for Guaranteed WCAG AA Text Legibility */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        'linear-gradient(to top, rgba(3, 5, 17, 0.96) 0%, rgba(4, 8, 24, 0.72) 42%, rgba(3, 5, 17, 0.18) 100%)',
-                    }}
-                  />
+              {/* Top Corner Index & Expand Icon */}
+              <div className="relative z-10 p-5 sm:p-6 mb-auto flex items-center justify-between">
+                <span className="font-mono text-xs font-medium text-white/75 tabular-nums">
+                  {work.index} / 06
+                </span>
+                <span className="w-8 h-8 rounded-lg bg-[#05091a]/75 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/75 group-hover:text-white group-hover:border-[#8ba8ff]/50 transition-colors">
+                  <ArrowUpRight className="w-4 h-4" />
+                </span>
+              </div>
+
+              {/* Bottom Card Content: Just Image and Year Completed */}
+              <div className="relative z-10 p-5 sm:p-6 pt-0">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#030511]/85 backdrop-blur-md border border-white/15 text-xs sm:text-sm font-semibold text-white">
+                  <span className="text-[#8ba8ff] font-normal">Completed</span>
+                  <span className="font-mono tabular-nums text-lumine-gradient">{work.year}</span>
                 </div>
-
-                {/* Top Corner Editorial Index & Interactive Expand Affordance */}
-                <div className="relative z-10 p-5 sm:p-6 mb-auto flex items-center justify-between">
-                  <span className="font-mono text-xs font-medium text-white/75 tabular-nums">
-                    {work.index} / 06
-                  </span>
-                  <span className="w-8 h-8 rounded-lg bg-[#05091a]/75 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/75 group-hover:text-white group-hover:border-[#8ba8ff]/50 transition-colors">
-                    <ArrowUpRight className="w-4 h-4" />
-                  </span>
-                </div>
-
-                {/* Bottom Content Overlay: Company Name, Project Title, Address, and Year */}
-                <div className="relative z-10 p-5 sm:p-7 pt-0">
-                  {/* Unboxed Metadata Line: Company Name · Year */}
-                  <div className="flex items-center justify-between gap-3 text-xs sm:text-[13px] font-medium text-[#9cb5ff] mb-1.5">
-                    <span className="text-white font-semibold tracking-[-0.01em]">
-                      {work.companyName}
-                    </span>
-                    <span className="font-mono text-[#a8c1ff] tabular-nums shrink-0">
-                      {work.year}
-                    </span>
-                  </div>
-
-                  {/* Project Headline */}
-                  <h3 className="font-display text-lg sm:text-xl font-semibold text-white tracking-[-0.015em] group-hover:text-[#c4d7ff] transition-colors">
-                    {work.projectTitle}
-                  </h3>
-
-                  {/* Technical Scope Line */}
-                  <p className="mt-1 text-xs text-[#c8d6f5]/70 line-clamp-1">
-                    {work.scope}
-                  </p>
-
-                  {/* Hairline Divider + Physical Address & Year Footer */}
-                  <div className="mt-4 pt-3.5 border-t border-white/12 flex items-center justify-between gap-4 text-xs text-[#c8d6f5]/80">
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <MapPin className="w-3.5 h-3.5 text-[#8ba8ff] shrink-0" />
-                      <span className="truncate">{work.address}</span>
-                    </div>
-                    <span className="font-mono text-[11px] text-white/55 tabular-nums shrink-0">
-                      Completed {work.year}
-                    </span>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+              </div>
+            </article>
+          ))}
         </div>
       </div>
 
-      {/* Fullscreen Lightbox Case-Study Viewer Modal */}
+      {/* Lightbox Modal */}
       {activeWork && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#02040d]/88 backdrop-blur-lg"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#02040d]/90 backdrop-blur-lg"
           onClick={() => setActiveWorkIndex(null)}
         >
           <div
@@ -274,7 +190,7 @@ export const ShowcaseSection: React.FC = () => {
               <div className="flex items-center gap-2 text-xs text-[#9cb5ff] font-mono tabular-nums">
                 <span>Installation {activeWork.index} of 06</span>
                 <span aria-hidden="true">·</span>
-                <span>{activeWork.year}</span>
+                <span className="text-white font-semibold">Completed {activeWork.year}</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -309,43 +225,17 @@ export const ShowcaseSection: React.FC = () => {
             <div className="relative aspect-[16/9] w-full bg-[#040714] overflow-hidden">
               <img
                 src={activeWork.image}
-                alt={`${activeWork.companyName} — ${activeWork.projectTitle}`}
-                referrerPolicy="no-referrer"
+                alt={`Completed ${activeWork.year}`}
                 className="w-full h-full object-cover"
               />
             </div>
 
-            {/* Case Study Metadata Details */}
-            <div className="p-6 sm:p-7">
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-                <div>
-                  <div className="text-xs font-semibold text-[#8ba8ff] tracking-wide">
-                    {activeWork.companyName}
-                  </div>
-                  <h3 className="font-display text-xl sm:text-2xl font-semibold text-white mt-0.5">
-                    {activeWork.projectTitle}
-                  </h3>
-                </div>
-                <span className="font-mono text-sm font-semibold text-[#a8c1ff] tabular-nums">
-                  Year: {activeWork.year}
-                </span>
-              </div>
-
-              <div className="mt-4 pt-4 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                <div>
-                  <span className="text-[#9cb5ff]/60 block mb-1">Installation Address</span>
-                  <span className="text-white/90 font-medium flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#8ba8ff] shrink-0" />
-                    {activeWork.address}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-[#9cb5ff]/60 block mb-1">System Architecture</span>
-                  <span className="text-white/90 font-mono tabular-nums">
-                    {activeWork.scope}
-                  </span>
-                </div>
-              </div>
+            {/* Clean Footer with Just Year */}
+            <div className="px-6 py-4 bg-[#050817] flex items-center justify-between">
+              <span className="text-xs text-[#8ba8ff]">Past Work Archive</span>
+              <span className="font-mono text-sm font-semibold text-white">
+                Completed {activeWork.year}
+              </span>
             </div>
           </div>
         </div>

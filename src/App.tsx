@@ -11,6 +11,7 @@ import { LedTickerSection } from './components/LedTickerSection';
 import { ServicesSection } from './components/ServicesSection';
 import { StatsSection } from './components/StatsSection';
 import { ShowcaseSection } from './components/ShowcaseSection';
+import { GalleryPage } from './components/GalleryPage';
 import { ReviewsSection } from './components/ReviewsSection';
 import { MapSection } from './components/MapSection';
 import { AboutSection } from './components/AboutSection';
@@ -23,17 +24,51 @@ const WHATSAPP_INSTALLATION_URL = `https://wa.me/2347035676769?text=${encodeURIC
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [currentView, setCurrentView] = useState<'home' | 'gallery'>(() => {
+    return window.location.hash === '#gallery' ? 'gallery' : 'home';
+  });
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 24);
     };
 
+    const handleHashChange = () => {
+      if (window.location.hash === '#gallery') {
+        setCurrentView('gallery');
+      } else {
+        setCurrentView('home');
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('hashchange', handleHashChange);
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('hashchange', handleHashChange);
     };
   }, []);
+
+  const navigateToGallery = () => {
+    window.location.hash = '#gallery';
+    setCurrentView('gallery');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToHome = () => {
+    window.location.hash = '#showcase';
+    setCurrentView('home');
+    setTimeout(() => {
+      const showcaseEl = document.getElementById('showcase');
+      if (showcaseEl) {
+        showcaseEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  if (currentView === 'gallery') {
+    return <GalleryPage onBack={navigateToHome} />;
+  }
 
   return (
     <div id="top" className="relative min-h-screen w-full bg-[#030511] text-white select-none">
@@ -157,10 +192,10 @@ export default function App() {
         </main>
       </section>
 
-      {/* Continuous Horizontal Scroll of Companies Directly Under the 100vh Hero */}
+      {/* Continuous Horizontal Scroll of Companies Directly Under the 100vh Hero with 4 Uploaded Logos */}
       <CompanyMarquee />
 
-      {/* Products Section (1 in a row on mobile, 3 on desktop, 6 products total) */}
+      {/* Products Section (1 in a row on mobile, 3 on desktop, 6 products total with lowercase .webp images) */}
       <ProductsSection />
 
       {/* Single-Row LED Matrix Ticker Scrolling Right-to-Left with 3 Cycling Effects */}
@@ -172,8 +207,8 @@ export default function App() {
       {/* Stats Section (4 Stats directly under the Services Section) */}
       <StatsSection />
 
-      {/* Showcase Section (Asymmetric Bento Grid of 6 Past Works with Image, Company Name, Address & Year) */}
-      <ShowcaseSection />
+      {/* Showcase Section (6 Past Works with Images "thirteen", "thirty-one", "thirty-seven", "thirty-two", "three", "twenty-five" and years 2016, 2018, 2020, 2023, 2025, 2026; "See More" button) */}
+      <ShowcaseSection onSeeMore={navigateToGallery} />
 
       {/* Reviews Section (7 reviews scrolling horizontally continuously, each with review, name, and "Client") */}
       <ReviewsSection />
